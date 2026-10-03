@@ -1,0 +1,25 @@
+@use '../abstracts/variables' as *;
+
+body {
+  font-family: $font-base;
+  background-color: $color-bg;
+  color: $color-text;
+  padding: 40px;
+  line-height: 1.6;
+}
+
+h1 {
+  color: $color-primary;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: $color-primary;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: $color-primary;
+  font-weight: 600;
+}

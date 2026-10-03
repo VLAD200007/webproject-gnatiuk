@@ -1,0 +1,29 @@
+{
+  "name": "webproject-gnatiuk",
+  "version": "1.0.0",
+  "description": "Автор: Гнатюк Владислав, група 5-ІПБ\r Тема: Електронна бібліотека «BookSpace» — вебзастосунок для каталогізації, пошуку та збереження електронних книг і навчальних матеріалів.\r Стек: React + PHP + MySQL",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  
+  "scripts": {
+  "css": "sass scss/main.scss css/main.css --watch --style=expanded",
+  "build:css": "sass scss/main.scss css/main.css --style=compressed --no-source-map"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VLAD200007/webproject-prizvyshche.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VLAD200007/webproject-prizvyshche/issues"
+  },
+  "homepage": "https://github.com/VLAD200007/webproject-prizvyshche#readme",
+  "devDependencies": {
+    "sass": "^1.105.1"
+  }
+}

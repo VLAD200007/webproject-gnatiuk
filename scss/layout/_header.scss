@@ -1,0 +1,39 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.header {
+  background-color: $color-primary;
+  color: $white;
+  padding: $space;
+
+  &__container {
+    @include flex-center(row);
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  &__nav {
+    display: none;
+
+    @include respond-to(tablet) {
+      @include flex-center(row);
+      gap: 20px;
+    }
+  }
+
+  &__link {
+    color: $white;
+    text-decoration: none;
+    transition: color $transition;
+
+    &:hover {
+      color: $color-bg;
+    }
+  }
+}

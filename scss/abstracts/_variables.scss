@@ -1,0 +1,22 @@
+// Кольори
+$color-primary: #2c3e50;
+$color-text: #333333;
+$color-bg: #f8f9fa;
+$color-border: #dcdde1;
+$white: #ffffff;
+
+// Типографіка
+$font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$fs-base: 16px;
+
+// Розміри
+$radius: 6px;
+$space: 1rem;
+
+// Ефекти
+$shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+$transition: 0.3s ease;
+
+// Адаптивність (медіа-запити)
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
