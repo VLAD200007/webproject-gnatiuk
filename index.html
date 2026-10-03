@@ -11,13 +11,64 @@
     </style>
 </head>
 <body>
-    <h1>Лабораторна робота №5</h1>
+    <h1>Лабораторна робота №6</h1>
     <h2>Наскрізний проєкт з дисципліни «Вебтехнології та вебдизайн»</h2>
     <h3>Гнатюк</h3>
-    
-    <!-- СЮДИ СКРИПТ БУДЕ ВСТАВЛЯТИ КАРТКИ -->
+
+    <!-- Панель пошуку і фільтрів -->
+    <div class="filters" style="padding: 20px;">
+        <input type="text" id="search-input" class="field__input" placeholder="Пошук книг..." style="margin-bottom: 10px;">
+        <div id="category-filters">
+            <button class="button button--secondary" data-cat="">Всі</button>
+            <button class="button button--secondary" data-cat="Програмування">Програмування</button>
+            <button class="button button--secondary" data-cat="Дизайн">Дизайн</button>
+            <button class="button button--secondary" data-cat="Художня література">Художня література</button>
+        </div>
+    </div>
+
+    <!-- Каталог (ВІН ТУТ ОДИН) -->
     <div id="catalog"></div>
 
+    <!-- Форма пропозиції книги -->
+    <div style="padding: 20px; max-width: 400px;">
+        <h2>Запропонувати книгу</h2>
+        <div id="form-alert" class="alert" style="display:none; margin-bottom:15px;"></div>
+        <form id="suggest-form">
+            <div class="field" style="margin-bottom:15px;">
+                <label class="field__label" for="name-field">Ім'я</label>
+                <input class="field__input" type="text" id="name-field" name="userName">
+                <span class="field__error"></span>
+            </div>
+            <div class="field" style="margin-bottom:15px;">
+                <label class="field__label" for="email-field">Email</label>
+                <input class="field__input" type="text" id="email-field" name="userEmail">
+                <span class="field__error"></span>
+            </div>
+            <div class="field" style="margin-bottom:15px;">
+                <label class="field__label" for="title-field">Назва книги</label>
+                <input class="field__input" type="text" id="title-field" name="bookTitle">
+                <span class="field__error"></span>
+            </div>
+            <div class="field" style="margin-bottom:15px;">
+                <label class="field__label" for="reason-field">Чому варто додати?</label>
+                <input class="field__input" type="text" id="reason-field" name="reason">
+                <span class="field__error"></span>
+            </div>
+            <button class="button button--primary" type="submit">Надіслати</button>
+        </form>
+    </div>
+
+    <!-- Модальне вікно (сховане за замовчуванням) -->
+    <div id="book-modal" class="modal">
+        <div class="modal__overlay" data-close></div>
+        <div class="modal__window" role="dialog" aria-modal="true">
+            <button class="modal__close" data-close aria-label="Закрити">×</button>
+            <h3 id="modal-title">Назва</h3>
+            <p id="modal-author"></p>
+            <p id="modal-desc"></p>
+        </div>
+    </div>
+    
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

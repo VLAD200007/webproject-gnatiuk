@@ -8,7 +8,8 @@ export function renderCard(item) {
         <p>${item.description}</p>
       </div>
       <div class="card__footer">
-        <button class="button button--primary" data-id="${item.id}">Детальніше</button>
+        <data-action="open">
+        <button class="button button--primary" data-action="open" data-id="${item.id}">Детальніше</button>
       </div>
     </article>
   `;
