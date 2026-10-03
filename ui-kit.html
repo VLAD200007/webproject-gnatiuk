@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Kit — BookSpace</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    /* Службові стилі лише для вітрини (не частина UI-кіту) */
+    body { padding: 30px; }
+    .demo-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+    .demo-section { margin-bottom: 50px; }
+    .demo-grid { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+    .demo-card { width: 300px; }
+    .demo-form { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 16px; }
+    .demo-frame { border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; }
+    .demo-note { font-size: 0.9rem; opacity: 0.8; }
+    /* У вітрині модальне вікно не має перекривати весь екран */
+    .demo-modal { position: relative; z-index: 1; height: 220px; border: 1px solid var(--color-border); border-radius: var(--radius); overflow: hidden; }
+  </style>
+</head>
+<body>
+  <div class="demo-top">
+    <h1>UI-кіт електронної бібліотеки «BookSpace»</h1>
+    <button class="button button--secondary" id="theme-toggle" type="button" aria-pressed="false">Темна тема</button>
+  </div>
+
+  <main>
+    <section class="demo-section">
+      <h2>1. Кнопки (.button)</h2>
+      <div class="demo-grid">
+        <button class="button button--primary" type="button">Primary</button>
+        <button class="button button--secondary" type="button">Secondary</button>
+        <button class="button button--ghost" type="button">Ghost</button>
+        <button class="button button--primary" type="button" disabled>Disabled</button>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>2. Поля форми (.field)</h2>
+      <div class="demo-form">
+        <div class="field">
+          <label class="field__label" for="email">Email</label>
+          <input class="field__input" type="email" id="email" placeholder="student@example.com">
+        </div>
+
+        <div class="field field--invalid">
+          <label class="field__label" for="password">Пароль</label>
+          <input class="field__input" type="password" id="password" value="123" aria-invalid="true" aria-describedby="password-error">
+          <span class="field__error" id="password-error">Пароль має містити щонайменше 8 символів</span>
+        </div>
+
+        <div class="field field--disabled">
+          <label class="field__label" for="readonly">Заблоковане поле</label>
+          <input class="field__input" type="text" id="readonly" value="Не редагується" disabled>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>3. Картки книг (.card)</h2>
+      <div class="demo-grid">
+        <div class="demo-card">
+          <article class="card">
+            <img class="card__image" src="https://placehold.co/300x200?text=Book+Cover" width="300" height="200" alt="Обкладинка книги «Основи React»">
+            <h3 class="card__title">Основи React</h3>
+            <p class="card__text">Короткий опис навчального матеріалу. Він розкаже про компоненти, стан та хуки.</p>
+            <div class="card__footer">
+              <button class="button button--secondary" type="button">Детальніше</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="demo-card">
+          <article class="card card--featured">
+            <img class="card__image" src="https://placehold.co/300x200?text=Featured+Book" width="300" height="200" alt="Обкладинка книги «Просунутий PHP»">
+            <h3 class="card__title">Просунутий PHP</h3>
+            <p class="card__text">Виділена картка (модифікатор featured) має яскравішу рамку та тінь.</p>
+            <div class="card__footer">
+              <button class="button button--primary" type="button">У вибране</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>4. Навігація (.nav)</h2>
+      <nav class="nav" aria-label="Демонстраційна навігація">
+        <a href="#" class="nav__link nav__link--active" aria-current="page">Головна</a>
+        <a href="#" class="nav__link">Каталог книг</a>
+        <a href="#" class="nav__link">Кабінет</a>
+      </nav>
+    </section>
+
+    <section class="demo-section">
+      <h2>5. Сповіщення (.alert)</h2>
+      <div class="alert alert--success" role="status">Книгу успішно додано до вибраного!</div>
+      <div class="alert alert--error" role="alert">Помилка завантаження даних. Спробуйте ще раз.</div>
+      <div class="alert alert--warning" role="status">Ваша сесія скоро закінчиться.</div>
+    </section>
+
+    <section class="demo-section">
+      <h2>6. Модальне вікно (.modal)</h2>
+      <p class="demo-note">Для демонстрації до контейнера додано модифікатор <code>--open</code>, а позиціонування змінено службовим класом <code>.demo-modal</code>, щоб вікно не перекривало весь екран.</p>
+
+      <div class="modal modal--open demo-modal">
+        <div class="modal__overlay"></div>
+        <div class="modal__window" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <button class="modal__close" type="button" aria-label="Закрити">×</button>
+          <h3 id="modal-title">Підтвердження</h3>
+          <p>Ви дійсно хочете видалити цю книгу з бібліотеки?</p>
+          <button class="button button--primary" type="button">Видалити</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <h2>7. Шапка та підвал (.header, .footer)</h2>
+      <p class="demo-note">Навігація шапки з’являється від ширини вікна 768 px.</p>
+      <div class="demo-frame">
+        <header class="header">
+          <div class="header__container">
+            <span class="header__logo">BookSpace</span>
+            <nav class="header__nav" aria-label="Головна навігація">
+              <a class="header__link" href="#">Каталог</a>
+              <a class="header__link" href="#">Вибране</a>
+              <a class="header__link" href="#">Увійти</a>
+            </nav>
+          </div>
+        </header>
+        <footer class="footer">
+          <div class="footer__content">
+            <span class="footer__text">© 2026 BookSpace</span>
+            <span class="footer__text">Гнатюк Владислав, 5-ІПБ</span>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Перемикач теми для перевірки світлої й темної палітр
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      var root = document.documentElement;
+      btn.addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') !== 'dark';
+        root.setAttribute('data-theme', dark ? 'dark' : 'light');
+        btn.setAttribute('aria-pressed', String(dark));
+        btn.textContent = dark ? 'Світла тема' : 'Темна тема';
+      });
+    })();
+  </script>
+</body>
+</html>

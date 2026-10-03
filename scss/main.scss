@@ -6,3 +6,10 @@
 
 @use 'layout/header';
 @use 'layout/footer';
+
+@use 'components/button';
+@use 'components/form';
+@use 'components/card';
+@use 'components/nav';
+@use 'components/modal';
+@use 'components/alert';

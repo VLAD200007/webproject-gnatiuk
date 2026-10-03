@@ -5,6 +5,7 @@
   background-color: $color-primary;
   color: $white;
   padding: $space;
+  box-shadow: $shadow;
 
   &__container {
     @include flex-center(row);
@@ -16,6 +17,7 @@
   &__logo {
     font-size: 1.25rem;
     font-weight: bold;
+    letter-spacing: 0.02em;
   }
 
   &__nav {
@@ -34,6 +36,11 @@
 
     &:hover {
       color: $color-bg;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $white;
+      outline-offset: 2px;
     }
   }
 }
