@@ -1,0 +1,27 @@
+@use '../abstracts/variables' as *;
+
+.alert {
+  padding: 15px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 15px;
+  border-left: 4px solid transparent;
+  font-weight: 500;
+
+  &--success {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--color-success);
+    border-left-color: var(--color-success);
+  }
+
+  &--error {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--color-error);
+    border-left-color: var(--color-error);
+  }
+
+  &--warning {
+    background-color: rgba(241, 196, 15, 0.15);
+    color: var(--color-warning);
+    border-left-color: var(--color-warning);
+  }
+}

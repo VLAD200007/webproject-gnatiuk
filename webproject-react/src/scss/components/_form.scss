@@ -1,0 +1,60 @@
+@use '../abstracts/variables' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__label {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  &__input {
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: inherit;
+    transition: border-color var(--transition);
+
+    &::placeholder {
+      color: var(--color-text);
+      opacity: 0.7;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 1px;
+    }
+  }
+
+  &__error {
+    display: none;
+    color: var(--color-error);
+    font-size: 0.85rem;
+    align-items: center;
+    gap: 4px;
+
+    &::before {
+      content: '⚠️';
+    }
+  }
+
+  &--invalid {
+    .field__input {
+      border-color: var(--color-error);
+    }
+    .field__error {
+      display: flex;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    .field__input {
+      cursor: not-allowed;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+// ==========================================
+// BookSpace - Reset (_reset.scss)
+// ==========================================
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+// Повага до налаштувань користувача: без анімацій, якщо вони вимкнені в ОС
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

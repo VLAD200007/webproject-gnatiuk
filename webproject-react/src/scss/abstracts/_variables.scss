@@ -1,0 +1,60 @@
+// ==========================================
+// BookSpace - Variables (_variables.scss)
+// ==========================================
+
+// 1. SCSS-змінні (єдине джерело значень)
+$color-primary: #2c3e50;
+$color-text: #333333;
+$color-bg: #f8f9fa;
+$color-border: #dcdde1;
+$white: #ffffff;
+
+$font-base: 'Segoe UI', Tahoma, sans-serif;
+$fs-base: 16px;
+
+$radius: 6px;
+$space: 1rem;
+
+$shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+$transition: 0.3s ease;
+
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+
+// 2. Користувацькі CSS-змінні для темізації
+:root {
+  color-scheme: light;
+
+  --color-primary: #{$color-primary};
+  --color-on-primary: #{$white};
+  --color-text: #{$color-text};
+  --color-bg: #{$white};
+  --color-bg-hover: #{$color-bg};
+  --color-border: #{$color-border};
+
+  // Кольори станів (контраст ≥ 4.5:1 на світлому тлі)
+  --color-success: #196f3d;
+  --color-error: #b03226;
+  --color-warning: #8a4b00;
+
+  --radius: #{$radius};
+  --transition: #{$transition};
+  --shadow: #{$shadow};
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-primary: #4f9d75;
+  --color-on-primary: #0b1013; // білий текст на зеленому давав лише 3.3:1
+  --color-text: #e8eaed;
+  --color-bg: #12181b;
+  --color-bg-hover: #1e262b;
+  --color-border: #3a4248;
+
+  --color-success: #4cd48a;
+  --color-error: #ff8a80;
+  --color-warning: #ffc247;
+
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
