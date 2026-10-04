@@ -2,22 +2,41 @@ import { getMaterials } from './services/api.js';
 import { Store } from './services/store.js';
 import { renderList } from './ui/renderList.js';
 import { validateForm } from './utils/validate.js';
+import { debounce } from './utils/debounce.js';
 
 let store = null;
 const container = document.getElementById('catalog');
 const searchInput = document.getElementById('search-input');
 const categoryFilters = document.getElementById('category-filters');
 
-// Розширений об'єкт стану з трьома станами (loading, success, error)
+// --- 1. Відновлення стану з вебсховища (sessionStorage) ---
+const savedState = JSON.parse(sessionStorage.getItem('app_state')) || {};
 let state = {
   status: 'loading', // 'loading' | 'success' | 'error'
   items: [],
   error: null,
-  query: '',
-  category: ''
+  query: savedState.query || '',
+  category: savedState.category || ''
 };
 
-// Функція рендерингу залежно від стану інтерфейсу
+// Відновлюємо значення в UI
+searchInput.value = state.query;
+
+// Функція збереження стану
+function saveState() {
+  sessionStorage.setItem('app_state', JSON.stringify({ query: state.query, category: state.category }));
+}
+
+// Форматування повідомлення про помилку
+function getErrorMessage(errorMsg) {
+  if (errorMsg === 'OFFLINE') return 'Немає підключення до інтернету. Перевірте мережу.';
+  if (errorMsg === '404') return 'Дані не знайдено на сервері (Помилка 404).';
+  if (errorMsg === 'AUTH') return 'Немає доступу до ресурсу (Помилка авторизації).';
+  if (errorMsg === 'SERVER') return 'Внутрішня помилка сервера. Спробуйте пізніше.';
+  return `Помилка завантаження: ${errorMsg}`;
+}
+
+// --- 2. Функція рендерингу ---
 function render() {
   if (state.status === 'loading') {
     container.innerHTML = `<div class="alert alert--warning" role="status" style="margin: 20px;">Завантаження даних каталогу з мережі...</div>`;
@@ -25,7 +44,14 @@ function render() {
   }
   
   if (state.status === 'error') {
-    container.innerHTML = `<div class="alert alert--error" role="alert" style="margin: 20px;">Помилка завантаження: ${state.error.message}. Спробуйте пізніше.</div>`;
+    container.innerHTML = `
+      <div class="alert alert--error" role="alert" style="margin: 20px;">
+        ${getErrorMessage(state.error.message)}
+        <br><button id="retry-btn" class="button button--primary" style="margin-top: 10px;">Спробувати ще раз</button>
+      </div>`;
+      
+    // Обробник для кнопки повтору
+    document.getElementById('retry-btn')?.addEventListener('click', () => loadData(state.query));
     return;
   }
 
@@ -35,21 +61,30 @@ function render() {
     if (state.category) {
       list = list.filter(m => m.category === state.category);
     }
-    container.innerHTML = renderList(list);
+    
+    // Стан порожнього результату (не помилка!)
+    if (list.length === 0) {
+      container.innerHTML = `<div class="alert alert--warning" style="margin: 20px;">За вашим запитом нічого не знайдено.</div>`;
+    } else {
+      container.innerHTML = renderList(list);
+    }
   }
 }
 
-// Асинхронне завантаження даних із API
-async function loadData() {
+// --- 3. Асинхронне завантаження даних із API ---
+async function loadData(searchQuery = '', force = false) {
   state.status = 'loading';
   render();
   
   try {
-    const rawMaterials = await getMaterials();
+    const rawMaterials = await getMaterials(searchQuery, force);
     store = new Store(rawMaterials); // Передаємо дані у Store
     state.items = rawMaterials;
     state.status = 'success';
   } catch (error) {
+    // Ігноруємо AbortError, щоб не блимала помилка при швидкому наборі
+    if (error.name === 'AbortError') return; 
+    
     state.error = error;
     state.status = 'error';
   }
@@ -57,20 +92,47 @@ async function loadData() {
   render();
 }
 
-// Пошук та фільтрація
+// --- 4. Пошук та фільтрація (з Debounce) ---
+const handleSearch = debounce((query) => {
+  state.query = query;
+  saveState();
+  loadData(query); // Робимо реальний запит на сервер при пошуку
+}, 300);
+
 searchInput.addEventListener('input', (event) => {
-  state = { ...state, query: event.target.value };
-  render();
+  handleSearch(event.target.value);
 });
 
 categoryFilters.addEventListener('click', (event) => {
   if (event.target.tagName !== 'BUTTON') return;
-  state = { ...state, category: event.target.dataset.cat };
-  render();
+  state.category = event.target.dataset.cat;
+  saveState();
+  render(); // Категорії фільтруємо локально, не смикаємо API
+});
+
+// --- 5. Кнопки оновлення та скидання фільтрів ---
+const controlsHtml = `
+  <div style="margin: 20px 0;">
+    <button id="force-update-btn" class="button button--secondary" style="margin-right: 10px;">Оновити примусово (ігнорувати кеш)</button>
+    <button id="reset-filters-btn" class="button button--secondary">Скинути фільтри</button>
+  </div>
+`;
+categoryFilters.insertAdjacentHTML('afterend', controlsHtml);
+
+document.getElementById('force-update-btn').addEventListener('click', () => {
+  loadData(state.query, true);
+});
+
+document.getElementById('reset-filters-btn').addEventListener('click', () => {
+  state.query = '';
+  state.category = '';
+  searchInput.value = '';
+  sessionStorage.removeItem('app_state');
+  loadData();
 });
 
 // Запуск завантаження при старті
-loadData();
+loadData(state.query);
 
 
 // --- Делегування та Модальне вікно ---
