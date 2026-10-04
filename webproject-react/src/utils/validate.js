@@ -1,24 +1,20 @@
-export function validateForm(data) {
+export function validate(form) {
   const errors = {};
-
-  if (!data.userName || data.userName.length < 2) {
-    errors.userName = "Ім'я має містити мінімум 2 символи.";
+  
+  if (!form.name || form.name.trim() === '') {
+    errors.name = "Введіть ім'я";
   }
   
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!data.userEmail || !emailRegex.test(data.userEmail)) {
-    errors.userEmail = "Введіть коректний email.";
+  if (!form.email || !form.email.includes('@')) {
+    errors.email = "Введіть коректну пошту";
   }
-
-  if (!data.bookTitle || data.bookTitle.length < 3) {
-    errors.bookTitle = "Назва має містити мінімум 3 символи.";
-  } else if (!/^[А-ЯA-ZІЇЄҐ]/.test(data.bookTitle)) {
-    errors.bookTitle = "Назва книги має починатися з великої літери."; // Специфічне правило
+  
+  if (!form.message || form.message.trim() === '') {
+    errors.message = "Введіть повідомлення";
   }
-
-  if (!data.reason || data.reason.length < 10) {
-    errors.reason = "Опишіть причину детальніше (мінімум 10 символів).";
-  }
-
+  
   return errors;
 }
+
+// Дублюємо у вигляді default, щоб помилка зникла за будь-якого імпорту
+export default validate;
